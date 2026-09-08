@@ -20,5 +20,8 @@ rm nvim-linux-x86_64.tar.gz
 echo "6. Verifying installation:"
 nvim --version
 
+echo "7. Install lazy plugin"
+git clone https://github.com/folke/lazy.nvim.git ~/.local/share/nvim/lazy/lazy.nvim
+
 echo "Success! Neovim tarball installed perfectly."
 
