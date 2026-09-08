@@ -21,6 +21,7 @@ echo "6. Verifying installation:"
 nvim --version
 
 echo "7. Install lazy plugin"
+rm -rf ~/.local/share/nvim/lazy/lazy.nvim
 git clone https://github.com/folke/lazy.nvim.git ~/.local/share/nvim/lazy/lazy.nvim
 
 echo "Success! Neovim tarball installed perfectly."
