@@ -13,4 +13,5 @@ require("lazy").setup("plugins")
 require("keymaps")
 require("abbreviations")
 require("autocmds")
+require("settings")
 
