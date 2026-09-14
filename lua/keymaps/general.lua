@@ -15,4 +15,6 @@ vim.keymap.set('n', '<leader>sv', function()
   print("Konfigurationen har laddats om!")
 end, { desc = "Ladda om hela Neovim-konfigurationen" })
 
+-- Exit terminal mode by pressing Escape twice
+vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]], { desc = 'Exit terminal mode with double Esc' })
 
