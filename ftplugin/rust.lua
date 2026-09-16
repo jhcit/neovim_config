@@ -78,3 +78,8 @@ vim.keymap.set('n', '<leader>do', dap.step_over, opts)
 opts.desc = "Stega In (Step Into)"
 vim.keymap.set('n', '<leader>di', dap.step_into, opts)
 
+-- This file automatically runs ONLY when opening a .rs file
+local opts = { buffer = true, silent = true }
+
+vim.keymap.set('n', '<leader>ci', vim.lsp.buf.incoming_calls, opts)
+vim.keymap.set('n', '<leader>co', vim.lsp.buf.outgoing_calls, opts)
