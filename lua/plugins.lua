@@ -1,11 +1,12 @@
--- 1. Starta och konfigurera lazy.nvim direkt i denna fil
+-- ~/.config/nvim/lua/plugins.lua
+
 require("lazy").setup({
-  -- Här lägger vi till inställningen som fixar ditt hererocks/luarocks-fel!
+  -- Fixar hererocks/luarocks-fel
   rocks = {
     enabled = false, 
   },
 
-  -- 2. Här klistrar du in alla dina plugins i "spec"-blocket
+  -- ALLA dina plugins ligger här inuti "spec"-blocket
   spec = {
     -- [Färgtema]
     {
@@ -43,7 +44,7 @@ require("lazy").setup({
       config = function()
         require("mason").setup()
         require("mason-lspconfig").setup({
-          ensure_installed = { "rust_analyzer", "pyright", "clangd"  }
+          ensure_installed = { "rust_analyzer", "pyright", "clangd" }
         })
       end
     },
@@ -100,7 +101,57 @@ require("lazy").setup({
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Sök text inuti filer" })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Sök bland öppna buffertar" })
       end
-    }
-  }
-})
+    },
+
+    ---------------------------------------------------------------------
+    -- AVANTE (Uppdaterad struktur för att ta bort alla varningar!)
+    ---------------------------------------------------------------------
+    {
+      "yetone/avante.nvim",
+      event = "VeryLazy",
+      lazy = false,
+      version = false, 
+      keys = {
+        { "<leader>aa", "<cmd>AvanteAsk<cr>", desc = "AI Chat", mode = { "n", "v" } },
+        { "<leader>ae", "<cmd>AvanteEdit<cr>", desc = "AI Edit", mode = { "v" } },
+      },
+      opts = {
+        provider = "claude",
+        auto_suggestions_provider = "claude",
+        -- Den nya krävda strukturen för providers:
+        providers = {
+          claude = {
+            endpoint = "https://anthropic.com",
+            model = "sonnet-5",
+            extra_request_body = {
+              temperature = 0,
+              max_tokens = 4096,
+            },
+          },
+        },
+        mappings = {
+          ask = "<leader>aa",
+          edit = "<leader>ae",
+          refresh = "<leader>ar",
+        },
+      },
+      build = "make",
+      dependencies = {
+        "stevearc/dressing.nvim",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+        "hrsh7th/nvim-cmp", 
+        "nvim-tree/nvim-web-devicons",
+        {
+          "HakonHarnes/img-clip.nvim",
+          event = "VeryLazy",
+          opts = {
+            default = { embed_image_as_markdown = true, real_path = true },
+          },
+        },
+      },
+    }, -- Slut på Avante
+
+  }, -- Här stängs spec-blocket
+}) -- Här stängs hela lazy-inställningen
 
