@@ -25,3 +25,16 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Sök öppna buffert
 -- 4. Pressing `<leader>p` opens a fuzzy-find popup showing all your active registers and their contents.
 vim.keymap.set('n', '<leader>p', '<cmd>Telescope registers<CR>', { desc = 'Paste from register' })
 
+-- Standard navigation (Go to definition/implementation)
+vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', { desc = "Go to Definition" })
+vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', { desc = "Go to Implementation" })
+
+-- Callers and Symbols (Fuzzy search using Telescope + FZF)
+vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', { desc = "Find Callers (References)" })
+vim.keymap.set('n', '<leader>fs', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', { desc = "Fuzzy Find Functions/Symbols" })
+
+-- Utility actions (Built-in LSP)
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "Show Documentation" })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = "Rename Symbol Everywhere" })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "LSP Code Actions" })
+

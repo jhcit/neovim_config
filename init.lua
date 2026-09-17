@@ -5,15 +5,14 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- 2. GRUNDLÄGGANDE EDITEURINSTÄLLNINGAR
-require("settings")
+-- 2. PLUGINS-KONFIGURATION (Hämtar automatiskt från lua/plugins.lua)
+require("plugins")
 
--- 3. PLUGINS-KONFIGURATION (Hämtar automatiskt från lua/plugins.lua)
-require("lazy").setup("plugins")
+-- 3. GRUNDLÄGGANDE EDITEURINSTÄLLNINGAR
+require("settings")
 require("keymaps")
 require("abbreviations")
 require("autocmds")
-require("settings")
 
 -- ===================================================================
 -- TVINGAD DIREKT-DEBUGGER (Klistras in längst ner i din neovim_config/init.lua)
