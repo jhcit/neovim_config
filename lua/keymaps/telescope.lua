@@ -9,15 +9,36 @@ vim.keymap.set('n', '<leader>fg', function()
   local extension = vim.fn.input("Filändelse (t.ex. rs, lua, lämna tom för alla): ")
 
   local opts = {}
+  
+  -- Hantera sökmapp
   if folder ~= "" then
     opts.search_dirs = { folder }
   end
+  
+  -- Hantera filändelse via ripgrep-argument för live_grep_args
   if extension ~= "" then
-    opts.glob_pattern = "*." .. extension
+    opts.additional_args = function()
+      return { "-g", "*." .. extension }
+    end
   end
 
-  builtin.live_grep(opts)
-end, { desc = "Sök text med mapp- och filändelsefilter" })
+  -- Anropa det nya pluginet istället för builtin
+  require('telescope').extensions.live_grep_args.live_grep_args(opts)
+end, { desc = "Sök text med mapp-, filändelsefilter och REGEX" })
+
+-- 2. Buffer Switcher by Extension / Filter (<leader>ft)
+vim.keymap.set('n', '<leader>ft', function()
+    vim.ui.input({ prompt = 'Filter buffers by extension/term: ' }, function(input)
+        if not input or input == "" then return end
+        
+        -- Open telescope buffers with the user input preset as the default search text
+        require('telescope.builtin').buffers({
+            default_text = input,
+            -- Optional: If you only want exact extension matches, you can do:
+            -- default_text = "%." .. input .. "$" 
+        })
+    end)
+end, { desc = 'Telescope list buffers by extension' })
 
 -- 3. Sök bland öppna buffertar
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Sök öppna buffertar" })

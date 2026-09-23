@@ -74,7 +74,6 @@ require("lazy").setup({
         })
       end
     },
-
     -- [Debugging - UI]
     {
       "rcarriga/nvim-dap-ui",
@@ -94,11 +93,24 @@ require("lazy").setup({
     {
       "nvim-telescope/telescope.nvim",
       tag = "0.1.8",
-      dependencies = { "nvim-lua/plenary.nvim" },
+      dependencies = { 
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim" -- 1. Lade till tillägget här
+      },
       config = function()
+        local telescope = require('telescope')
         local builtin = require('telescope.builtin')
+        
+        -- 2. Ladda in live_grep_args i Telescope
+        telescope.load_extension("live_grep_args")
+
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Sök filer (Filnamn)" })
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Sök text inuti filer" })
+        
+        -- 3. Ändrade denna raden för att använda live_grep_args istället för builtin.live_grep
+        vim.keymap.set('n', '<leader>fg', function()
+          telescope.extensions.live_grep_args.live_grep_args()
+        end, { desc = "Sök text inuti filer (med Regex)" })
+
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Sök bland öppna buffertar" })
       end
     },
@@ -154,4 +166,3 @@ require("lazy").setup({
 
   }, -- Här stängs spec-blocket
 }) -- Här stängs hela lazy-inställningen
-
