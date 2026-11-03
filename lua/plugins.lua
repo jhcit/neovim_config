@@ -190,6 +190,8 @@ require("lazy").setup({
             default = { embed_image_as_markdown = true, real_path = true },
           },
         },
+        "ColinKennedy/mega.logging",
+        "ColinKennedy/mega.cmdparse",
       },
     }, -- Slut på Avante
 
