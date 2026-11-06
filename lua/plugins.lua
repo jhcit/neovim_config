@@ -158,18 +158,32 @@ require("lazy").setup({
       },
       opts = {
         provider = "claude",
-        auto_suggestions_provider = "claude",
+        auto_suggestions_provider = "qwen",
         -- Den nya krävda strukturen för providers:
         providers = {
           claude = {
             endpoint = "https://anthropic.com",
-            model = "sonnet-5",
+            model = "claude-3-5-sonnet-20241022",
             extra_request_body = {
               temperature = 0,
               max_tokens = 4096,
             },
           },
         },
+        qwen = {
+            endpoint = "http://jhcitserver:11434/v1",
+            model = "qwen2.5-coder:7b",
+            extra_request_body = {
+              temperature = 0.2,
+              max_tokens = 4096,
+        },
+        deepseek = {
+            endpoint = "http://jhcitserver:11434/v1",
+            model = "deepseek-r1:8b",
+            extra_request_body = {
+              temperature = 0.6,
+              max_tokens = 4096,
+        }
         mappings = {
           ask = "<leader>aa",
           edit = "<leader>ae",
