@@ -40,6 +40,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+vim.keymap.set("x", '<leader>""', [[c"<C-r>""<ESC>]], { desc = "Surround visual selection with double quotes" })
+
 -- Paste from 'y' and sync to default + system clipboards
 vim.keymap.set({"n", "v"}, "<leader>py", function()
   local text = vim.fn.getreg('y')

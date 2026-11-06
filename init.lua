@@ -1,3 +1,4 @@
+vim.env.PATH = "/usr/bin:/usr/local/bin:" .. vim.env.PATH
 -- 1. SÖKVÄG TILL PLUGIN-HANTERAREN (lazy.nvim)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
