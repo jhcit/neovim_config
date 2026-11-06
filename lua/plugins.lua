@@ -165,6 +165,7 @@ require("lazy").setup({
               api_key_name = "",
               disable_tools = true,
               extra_request_body = {
+                stream = true,
                 temperature = 0.2,
                 max_tokens = 4096,
               },
