@@ -71,6 +71,9 @@ require("lazy").setup({
                 "--clang-tidy",
                 "--header-insertion=never",
             },
+                capabilities = {
+                offsetEncoding = { "utf-16" }, -- Slipper "offsetEncoding" warnings
+            },
         })
 
         -- 4. Enable the language server
