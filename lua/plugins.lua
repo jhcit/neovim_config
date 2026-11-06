@@ -152,20 +152,15 @@ require("lazy").setup({
     ---------------------------------------------------------------------
     {
       "yetone/avante.nvim",
-      event = "VeryLazy",
       lazy = false,
       version = false, 
-      keys = {
-        { "<leader>aa", "<cmd>AvanteAsk<cr>", desc = "AI Chat", mode = { "n", "v" } },
-        { "<leader>ae", "<cmd>AvanteEdit<cr>", desc = "AI Edit", mode = { "v" } },
-      },
       opts = {
         provider = "claude",
         auto_suggestions_provider = "qwen",
         -- Den nya krävda strukturen för providers:
         providers = {
           claude = {
-            endpoint = "https://anthropic.com",
+            endpoint = "https://api.anthropic.com",
             model = "claude-3-5-sonnet-20241022",
             extra_request_body = {
               temperature = 0,
