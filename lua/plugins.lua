@@ -155,43 +155,30 @@ require("lazy").setup({
       lazy = false,
       version = false, 
       opts = {
-        provider = "qwen",
-        auto_suggestions_provider = "qwen",
+        provider = "ollama",
+        auto_suggestions_provider = "ollama",
         -- Den nya krävda strukturen för providers:
         providers = {
-          claude = {
-            endpoint = "https://api.anthropic.com",
-            model = "claude-3-5-sonnet-20241022",
-            extra_request_body = {
-              temperature = 0,
-              max_tokens = 4096,
-            },
-          },
-          qwen = {
+          ollama = {
               endpoint = "http://jhcitserver:11434",
               model = "qwen2.5-coder:7b",
+              api_key_name = "",
+              disable_tools = true,
               extra_request_body = {
                 temperature = 0.2,
                 max_tokens = 4096,
               },
           },
-          deepseek = {
-              endpoint = "http://jhcitserver:11434",
-              model = "deepseek-r1:8b",
-              extra_request_body = {
-                temperature = 0.6,
-                max_tokens = 4096,
-              },
-          },
-        },
-
-        mappings = {
-          ask = "<leader>aa",
-          edit = "<leader>ae",
-          refresh = "<leader>ar",
         },
       },
       build = "make",
+      config = function(_, opts)
+        require("avante").setup(opts)
+        
+        -- Sätt upp dina kortkommandon globalt så de alltid fungerar:
+        vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>AvanteAsk<cr>", { desc = "AI Chat" })
+        vim.keymap.set("v", "<leader>ae", "<cmd>AvanteEdit<cr>", { desc = "AI Edit" })
+      end,
       dependencies = {
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",

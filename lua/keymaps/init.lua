@@ -3,4 +3,5 @@ require("keymaps.general")
 require("keymaps.telescope")
 require("keymaps.nvim-tree")
 require("keymaps.fugitive")
+require("keymaps.avante")
 
