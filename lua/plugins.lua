@@ -172,21 +172,24 @@ require("lazy").setup({
               max_tokens = 4096,
             },
           },
+	  qwen = {
+	      endpoint = "http://jhcitserver:11434/v1",
+	      model = "qwen2.5-coder:7b",
+	      extra_request_body = {
+	        temperature = 0.2,
+	        max_tokens = 4096,
+	      },
+	  },
+	  deepseek = {
+	      endpoint = "http://jhcitserver:11434/v1",
+	      model = "deepseek-r1:8b",
+	      extra_request_body = {
+	        temperature = 0.6,
+	        max_tokens = 4096,
+	      },
+	  },
         },
-        qwen = {
-            endpoint = "http://jhcitserver:11434/v1",
-            model = "qwen2.5-coder:7b",
-            extra_request_body = {
-              temperature = 0.2,
-              max_tokens = 4096,
-        },
-        deepseek = {
-            endpoint = "http://jhcitserver:11434/v1",
-            model = "deepseek-r1:8b",
-            extra_request_body = {
-              temperature = 0.6,
-              max_tokens = 4096,
-        }
+
         mappings = {
           ask = "<leader>aa",
           edit = "<leader>ae",
@@ -211,6 +214,5 @@ require("lazy").setup({
         "ColinKennedy/mega.cmdparse",
       },
     }, -- Slut på Avante
-
   }, -- Här stängs spec-blocket
 }) -- Här stängs hela lazy-inställningen
