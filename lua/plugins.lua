@@ -155,7 +155,7 @@ require("lazy").setup({
       lazy = false,
       version = false, 
       opts = {
-        provider = "claude",
+        provider = "ollama",
         auto_suggestions_provider = "qwen",
         -- Den nya krävda strukturen för providers:
         providers = {
@@ -167,22 +167,22 @@ require("lazy").setup({
               max_tokens = 4096,
             },
           },
-	  qwen = {
-	      endpoint = "http://jhcitserver:11434/v1",
-	      model = "qwen2.5-coder:7b",
-	      extra_request_body = {
-	        temperature = 0.2,
-	        max_tokens = 4096,
-	      },
-	  },
-	  deepseek = {
-	      endpoint = "http://jhcitserver:11434/v1",
-	      model = "deepseek-r1:8b",
-	      extra_request_body = {
-	        temperature = 0.6,
-	        max_tokens = 4096,
-	      },
-	  },
+          qwen = {
+              endpoint = "http://jhcitserver:11434/v1",
+              model = "qwen2.5-coder:7b",
+              extra_request_body = {
+                temperature = 0.2,
+                max_tokens = 4096,
+              },
+          },
+          deepseek = {
+              endpoint = "http://jhcitserver:11434/v1",
+              model = "deepseek-r1:8b",
+              extra_request_body = {
+                temperature = 0.6,
+                max_tokens = 4096,
+              },
+          },
         },
 
         mappings = {
