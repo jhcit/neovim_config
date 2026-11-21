@@ -3,7 +3,7 @@
 require("lazy").setup({
   -- Fixar hererocks/luarocks-fel
   rocks = {
-    enabled = false, 
+    enabled = false,
   },
 
   -- ALLA dina plugins ligger här inuti "spec"-blocket
@@ -113,7 +113,7 @@ require("lazy").setup({
       config = function()
         local dap, dapui = require("dap"), require("dapui")
         dapui.setup()
-        
+
         dap.listeners.before.attach.dapui_config = function() dapui.open() end
         dap.listeners.before.launch.dapui_config = function() dapui.open() end
         dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
@@ -125,19 +125,19 @@ require("lazy").setup({
     {
       "nvim-telescope/telescope.nvim",
       tag = "0.1.8",
-      dependencies = { 
+      dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-live-grep-args.nvim" -- 1. Lade till tillägget här
       },
       config = function()
         local telescope = require('telescope')
         local builtin = require('telescope.builtin')
-        
+
         -- 2. Ladda in live_grep_args i Telescope
         telescope.load_extension("live_grep_args")
 
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Sök filer (Filnamn)" })
-        
+
         -- 3. Ändrade denna raden för att använda live_grep_args istället för builtin.live_grep
         vim.keymap.set('n', '<leader>fg', function()
           telescope.extensions.live_grep_args.live_grep_args()
@@ -148,34 +148,52 @@ require("lazy").setup({
     },
 
     ---------------------------------------------------------------------
-    -- AVANTE (Uppdaterad struktur för att ta bort alla varningar!)
+    -- AVANTE (Slutgiltig städad version utan syntaxfel)
     ---------------------------------------------------------------------
     {
       "yetone/avante.nvim",
       lazy = false,
-      version = false, 
+      version = false,
       opts = {
-        provider = "ollama",
-        auto_suggestions_provider = "ollama",
-        -- Den nya krävda strukturen för providers:
+        provider = "ollama_remote",
+        auto_suggestions_provider = "ollama_remote",
+        mode = "legacy",
         providers = {
-          ollama = {
-              endpoint = "http://jhcitserver:11434",
-              model = "qwen2.5-coder:7b",
-              api_key_name = "",
-              disable_tools = true,
-              extra_request_body = {
-                stream = true,
-                temperature = 0.2,
-                max_tokens = 4096,
-              },
+          ollama_remote = {
+            __inherited_from = "openai",
+            endpoint = "http://jhcitserver:11434/v1",
+            model = "qwen2.5-coder:7b",
+            api_key_name = "",
+            -- HÄR VAR SYNTAXFELET FIXAT: Lagt till en fullständig curl-parser för OpenAI-protokollet
+            parse_curl_args = function(opts, code_opts)
+              return {
+                url = opts.endpoint .. "/chat/completions",
+                headers = {
+                  ["Accept"] = "application/json",
+                  ["Content-Type"] = "application/json",
+                },
+                body = {
+                  model = opts.model,
+                  messages = code_opts.messages,
+                  temperature = 0.2,
+                  max_tokens = 4096,
+                  stream = true,
+                },
+              }
+            end,
           },
+        },
+        mappings = {
+          sidebar = {
+            submit = "<CR>", -- Gör att Enter skickar meddelandet direkt
+            retry = "<leader>ar",
+          }
         },
       },
       build = "make",
       config = function(_, opts)
         require("avante").setup(opts)
-        
+
         -- Sätt upp dina kortkommandon globalt så de alltid fungerar:
         vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>AvanteAsk<cr>", { desc = "AI Chat" })
         vim.keymap.set("v", "<leader>ae", "<cmd>AvanteEdit<cr>", { desc = "AI Edit" })
@@ -184,7 +202,7 @@ require("lazy").setup({
         "stevearc/dressing.nvim",
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
-        "hrsh7th/nvim-cmp", 
+        "hrsh7th/nvim-cmp",
         "nvim-tree/nvim-web-devicons",
         {
           "HakonHarnes/img-clip.nvim",
@@ -199,3 +217,4 @@ require("lazy").setup({
     }, -- Slut på Avante
   }, -- Här stängs spec-blocket
 }) -- Här stängs hela lazy-inställningen
+
